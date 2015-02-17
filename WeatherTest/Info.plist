@@ -46,6 +46,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please let us determine your location, so you dont have to</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>ProximaNova-Bold.otf</string>

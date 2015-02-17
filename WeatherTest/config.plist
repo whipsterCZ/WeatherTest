@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>weather_api_url</key>
+	<string>https://api.worldweatheronline.com/free/v2/weather.ashx</string>
+	<key>search_api_url</key>
+	<string>https://api.worldweatheronline.com/free/v2/search.ashx</string>
+	<key>weather_api_key</key>
+	<string>4519541a787be11978365c9c59d62</string>
+	<key>default_tempreature_unit</key>
+	<string>Celsius</string>
+	<key>default_length_unit</key>
+	<string>Meters</string>
+</dict>
+</plist>
