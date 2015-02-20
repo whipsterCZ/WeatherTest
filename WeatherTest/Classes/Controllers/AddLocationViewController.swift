@@ -124,6 +124,21 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        //Cell animation
+        cell.layer.transform = CATransform3DMakeScale( 0.5, 0, 0.5)
+        cell.alpha = 0;
+        
+        //Define the final state (After the animation) and commit the animation
+        UIView.beginAnimations("rotation", context: nil)
+        UIView.setAnimationDuration(0.5)
+        cell.layer.transform = CATransform3DIdentity;
+        cell.alpha = 1;
+        UIView.commitAnimations()
+        
+    }
+    
     //MARK: - UISearchBarDelegate
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         navigateToLocations()

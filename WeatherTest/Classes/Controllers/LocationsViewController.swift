@@ -57,20 +57,29 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("weatherCell") as WeatherCell
+        return tableView.dequeueReusableCellWithIdentifier("weatherCell") as WeatherCell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: WeatherCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
+        //set Cell content
         var location = locations.locationList[indexPath.item]
         cell.titleLabel.text =  location.city
         cell.weatherLabel.text = location.weather.type
         cell.icon.image = location.weather.iconImage
         cell.isCurrentIcon.hidden = !location.isCurrent
         cell.tempreatureLabel.text = location.weather.tempreature(true)
-        return cell
-    }
-    
-    func _tableView(tableView: UITableView, willDisplayCell cell: WeatherCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.titleLabel.text =  locations.locationList[indexPath.item].city
-        cell.tempreatureLabel.text = "22"
+        
+        //Cell animation
+        cell.layer.transform = CATransform3DMakeScale( 0.5, 0, 0.5)
+        cell.alpha = 0;
+        
+        //Define the final state (After the animation) and commit the animation
+        UIView.beginAnimations("rotation", context: nil)
+        UIView.setAnimationDuration(0.5)
+        cell.layer.transform = CATransform3DIdentity;
+        cell.alpha = 1;
+        UIView.commitAnimations()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
