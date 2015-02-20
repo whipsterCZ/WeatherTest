@@ -8,15 +8,33 @@
 
 import UIKit
 
-class ForecastViewController: UIViewController {
+class ForecastViewController: UIViewController, UITableViewDataSource , UITableViewDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    var forecastList = [Forecast]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.registerNib(UINib(nibName: "WeatherCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "weatherCell")
+        tableView.allowsSelection = false
 
     }
-
+    
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.topItem?.title = "Forecast"
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData", name: RELOAD_NOTIFICATION, object: nil)
+        reloadData()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    func reloadData() {
+        forecastList = DI.context.locations.selectedLocation.weather.forecastList
+        self.navigationController?.navigationBar.topItem?.title = DI.context.locations.selectedLocation.city
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -24,15 +42,29 @@ class ForecastViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK: - UITableViewDataSource
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("weatherCell") as WeatherCell!
+        return cell
     }
-    */
+    
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return forecastList.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 90
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: WeatherCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        var day = forecastList[indexPath.item]
+        
+        cell.titleLabel.text = day.weekday
+        cell.tempreatureLabel.text = day.tempreature(true)
+        cell.icon.image = DI.context.locations.selectedLocation.weather.iconImage
+        cell.weatherLabel.text = DI.context.locations.selectedLocation.weather.type
+        
+    }
 
 }

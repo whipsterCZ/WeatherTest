@@ -11,6 +11,8 @@
 	<key>default_tempreature_unit</key>
 	<string>Celsius</string>
 	<key>default_length_unit</key>
-	<string>Meters</string>
+	<string>Metric</string>
+	<key>weather_update_interval</key>
+	<string>1800</string>
 </dict>
 </plist>

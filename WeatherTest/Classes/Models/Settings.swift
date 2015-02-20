@@ -11,8 +11,8 @@ import UIKit
 
 
 enum LengthUnit: String {
-    case Meters = "Meters"
-    case Inches = "Inches"
+    case Metric = "Metric"
+    case Imperial = "Imperial"
 }
 
 enum TempreatureUnit: String {
@@ -34,7 +34,7 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
     
     var scope = SettingOptions.TempreatureUnit
     var tempreatureUnitOptions = [ TempreatureUnit.Celsius, TempreatureUnit.Fahrenheit ]
-    var lengthUnitOptions = [ LengthUnit.Meters, LengthUnit.Inches ]
+    var lengthUnitOptions = [ LengthUnit.Metric, LengthUnit.Imperial ]
     var optionSelectedHandler: (()->Void)?
     
     private let userDefaults: NSUserDefaults
@@ -75,7 +75,7 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
         if let savedLengthUnit = userDefaults.stringForKey(SettingOptions.LengthUnit.rawValue) {
              lengthUnit = LengthUnit(rawValue: savedLengthUnit)!
         } else {
-            var defaultValue = DI.context.getParameter("default_length_unit", defaultValue: "Meters")!
+            var defaultValue = DI.context.getParameter("default_length_unit", defaultValue: "Metric")!
             lengthUnit = LengthUnit(rawValue: defaultValue)!
         }
     }
@@ -88,7 +88,7 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
         
     }
     
-    
+    // Particular Setting View Controller
     //MARK: UITableViewDelegate protocol
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -99,6 +99,7 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
         optionSelectedHandler!()
         
     }
+
     
     //MARK: UITableViewDatasource protocol
     
@@ -109,6 +110,7 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
         case .LengthUnit:       cell.textLabel!.text = lengthUnitOptions[indexPath.item].rawValue
         case .TempreatureUnit:  cell.textLabel!.text = tempreatureUnitOptions[indexPath.item].rawValue
         }
+        cell.textLabel?.font = UIFont(name: FONT_REGULAR, size: 17)
         return cell
         
     }
@@ -125,8 +127,22 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 80;
+        return 50;
     }
     
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as UITableViewHeaderFooterView //recast your view as a UITableViewHeaderFooterView
+        header.contentView.backgroundColor = UIColor.whiteColor();
+        header.textLabel.textColor = tableView.tintColor;
+        header.textLabel.font = UIFont(name: FONT_SEMIBOLD, size: 14)
+        
+        let headerSize = header.bounds.size
+        
+        let image = UIImage(named: "Line_forecast")
+        let border = UIImageView(image: image)
+        border.frame = CGRectMake(0, headerSize.height-1, headerSize.width, 1)
+        header.addSubview(border)
+        
+    }
     
 }

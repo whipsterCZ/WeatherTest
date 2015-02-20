@@ -12,15 +12,17 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var border: UIImageView!
     
     var locations = DI.context.locations
-    var locationList = [LocationData]()
+    var locationList = [Location]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.hidden = true
-    
+        tableView.registerClass(LocationSearchCell.self, forCellReuseIdentifier: "searchCell")
+        self.searchDisplayController?.searchResultsTableView.registerClass(LocationSearchCell.self, forCellReuseIdentifier: "searchCell")
+        
         //Hack for hidding empty cells
         tableView.tableFooterView = UIView()
         
@@ -28,11 +30,19 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
         UISearchBar.appearance().setImage(UIImage(named: "Search"), forSearchBarIcon: .Search, state: .Normal)
         UISearchBar.appearance().setImage(UIImage(named: "Close"), forSearchBarIcon: .Clear, state: .Normal)
         
+        //set border line scaling
+        border.contentMode = UIViewContentMode.ScaleToFill
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+         self.navigationController?.navigationBar.hidden = true
     }
     
     
@@ -42,6 +52,29 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
             self.locationList = foundLocations
             self.searchDisplayController?.searchResultsTableView.reloadData()
         })
+    }
+    
+    func navigateToLocations() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+//        self.navigationController?.popViewControllerAnimated(true)
+//        performSegueWithIdentifier("locationAdded", sender: self)
+    }
+    
+    func markSearchedText(search: String, found: String) -> String
+    {
+        if ( search.isEmpty) {
+            return found
+        }
+        let mutableString = NSMutableString(string: found)
+        let regular = NSRegularExpression(pattern:search, options: NSRegularExpressionOptions.CaseInsensitive, error: nil)
+        
+        regular!.replaceMatchesInString(
+            mutableString,
+            options: NSMatchingOptions.allZeros,
+            range: NSRange(location: 0, length: mutableString.length) ,
+            withTemplate: "<b>"+search+"</b>"
+        )
+        return mutableString as String
     }
 
     /*
@@ -66,19 +99,17 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell = tableView.dequeueReusableCellWithIdentifier("locationCell") as? UITableViewCell
-        if ( cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "locationCell")
-        }
+        var cell = tableView.dequeueReusableCellWithIdentifier("searchCell", forIndexPath: indexPath) as LocationSearchCell
         
         if tableView == self.tableView {
-            cell!.textLabel?.text = ""
+            cell.label?.text = "text"
         } else {
-            cell!.textLabel?.text = locationList[indexPath.item].getTitle()
+            var text = locationList[indexPath.item].getTitle()
+            text = markSearchedText(searchBar.text, found: text)
+            cell.label?.text = text
         }
-        
-        
-        return cell!
+ 
+        return cell
     }
     
     //MARK: - UITableViewDelegate
@@ -87,7 +118,7 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
         if tableView == self.searchDisplayController?.searchResultsTableView {
             var location = locationList[indexPath.item]
             locations.addLocationToList(location)
-            performSegueWithIdentifier("locationAdded", sender: self)
+            navigateToLocations()
 
         }
     }
@@ -95,7 +126,7 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
     
     //MARK: - UISearchBarDelegate
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        performSegueWithIdentifier("locationAdded", sender: self)
+        navigateToLocations()
     }
     
     //MARK: - UISearchDisplayDelegate
@@ -105,6 +136,7 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
         return true
     }
     
+    //add color line under search
     var searchTableViewHasOffset = false
     func searchDisplayController(controller: UISearchDisplayController, willShowSearchResultsTableView tableView: UITableView) {
         if !searchTableViewHasOffset {

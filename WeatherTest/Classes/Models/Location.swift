@@ -7,58 +7,57 @@
 //
 
 import Foundation
-import CoreData
 
-struct LocationData {
-    var latLng:String
-    var city:String
-    var country:String
+
+class Location: NSObject {
+
+
+    var latLng: String
+    var city: String
+    var country: String
+    var isCurrent = false
+//    var isSelected = false
+    
+    init(latLng:String, city:String, country:String) {
+        self.latLng = latLng
+        self.city = city
+        self.country = country
+    }
+    
+    lazy var weather: Weather = {        
+        return Weather(latLng: self.latLng)
+    }()
+    
     func getTitle() ->String {
         return "\(city), \(country)"
     }
-}
-
-class Location: NSManagedObject {
-
-    class var entity: String { return "Location" }
-
-    @NSManaged var latLng: String
-    @NSManaged var city: String
-    @NSManaged var country: String
-    @NSManaged var geoCurrent: Bool
-    @NSManaged var isSelected: Bool
     
     
-    func getTitle() ->String {
-        return "\(city), \(country)"
+    class var defaultLocation: Location  {
+        get {
+            var latLng = DI.context.locations.formatLatLng(50.083, lng: 14.467)
+            let location = Location(latLng: latLng, city: "Prague", country: "Czech Republic")
+//            location.isSelected = true
+            return location
+        }
     }
     
-    class func addManagedObjectFromLocation(location :LocationData) -> Location
-    {
-        let managed = NSEntityDescription.insertNewObjectForEntityForName(self.entity, inManagedObjectContext: DI.context.managedObjectContext!) as Location
-        managed.latLng = location.latLng
-        managed.city = location.city
-        managed.country = location.country
-//        managed.geoCurrent = location.geoCurrent
-//        managed.isSelected = location.isSelected
-
-        return managed
+    func encodeWithCoder(aCoder: NSCoder!) {
+        aCoder.encodeObject(latLng, forKey: "latLng")
+        aCoder.encodeObject(city , forKey: "city")
+        aCoder.encodeObject(country, forKey: "country")
+        aCoder.encodeBool(isCurrent, forKey: "isCurrent")
+//        aCoder.encodeBool(isSelected, forKey: "isSelected")
     }
     
-    class func StandaloneEntity() -> Location
-    {
-        return Location()
+    init(coder aDecoder: NSCoder!) {
+        latLng =    aDecoder.decodeObjectForKey("latLng") as String
+        city =      aDecoder.decodeObjectForKey("city") as String
+        country =   aDecoder.decodeObjectForKey("country") as String
+//        isSelected = aDecoder.decodeBoolForKey("isSelected")
+        isCurrent = aDecoder.decodeBoolForKey("isCurrent")
     }
     
-    class var defaultLocation: Location {
-        let location = Location()
-        location.city = "Default City"
-        location.country = "Czech Republic"
-        location.geoCurrent = false
-        location.isSelected = true
-        location.latLng = DI.context.locations.formatLatLng(50.083, lng: 14.467)
-        return location
-    }
 
 }
 

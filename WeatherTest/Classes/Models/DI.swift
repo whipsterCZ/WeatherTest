@@ -8,6 +8,13 @@ import Foundation
 import UIKit
 import CoreData
 
+let FONT_REGULAR = "Proxima Nova"
+let FONT_BOLD = "Proxima Nova-Bold"
+let FONT_SEMIBOLD = "ProximaNova-Semibold" //Proč nefunguje název s Mezerou???
+let FONT_LIGHT = "Proxima Nova-Light"
+
+let RELOAD_NOTIFICATION = "reloadData"
+
 class DI : NSObject {
     
     //MARK: Dependency Injection
@@ -53,13 +60,9 @@ class DI : NSObject {
         )
         }()
     
-    lazy var lightBlue = UIColor(red: 47/255, green: 145/255, blue: 1, alpha: 1)
+    lazy var lightBlue = UIColor(red: 95/255, green: 140/255, blue: 1, alpha: 1)
+    lazy var darkGray = UIColor(white: 0.2, alpha: 1)
     
-    
-    
-    
-    
-
     
     
     

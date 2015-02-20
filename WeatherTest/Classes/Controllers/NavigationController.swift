@@ -27,13 +27,23 @@ class NavigationController: UINavigationController {
         var bar = self.navigationBar
         bar.frame.size.height += 1
         
-        
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(named: "Line_settings"), forBarMetrics: UIBarMetrics.Default)
-        
         UINavigationBar.appearance().shadowImage = UIImage()
-        var navBorder = UIView(frame: CGRectMake(0, bar.frame.size.height-1, bar.frame.size.width, 1) )
-        navBorder.addSubview(UIImageView(image:  UIImage(named: "Line_settings")) )
-        self.navigationBar.addSubview(navBorder)
+        
+        
+        //draw rainbow border
+        var borderImageView =  UIImageView(image:  UIImage(named: "Line_settings"))
+        borderImageView.frame = CGRectMake(0, bar.frame.size.height-1, bar.frame.size.width, 1)
+        borderImageView.contentMode = UIViewContentMode.ScaleAspectFill
+//        borderImageView.clipsToBounds = true
+        self.navigationBar.addSubview(borderImageView)
+        
+        //set Title font & color
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName:DI.context.darkGray,
+            NSFontAttributeName: UIFont(name: FONT_SEMIBOLD, size: 18)!
+        ]
+
     }
 
 
