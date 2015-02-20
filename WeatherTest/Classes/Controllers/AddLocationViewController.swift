@@ -126,9 +126,10 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        //Cell animation
-        cell.layer.transform = CATransform3DMakeTranslation( -cell.frame.width/3, -cell.frame.origin.y, 0)
-        cell.alpha = 0;
+        
+        var offset =  CGFloat( -indexPath.item ) * ( CGFloat(cell.frame.width) / CGFloat( locationList.count )  )
+        cell.layer.transform = CATransform3DMakeTranslation( offset ,0, 0)
+        cell.alpha = 0.5;
         
         //Define the final state (After the animation) and commit the animation
         UIView.beginAnimations("rotation", context: nil)

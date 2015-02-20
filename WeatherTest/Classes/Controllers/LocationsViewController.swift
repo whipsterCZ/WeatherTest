@@ -75,8 +75,8 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
         
         
         //Cell animation
-        cell.layer.transform = CATransform3DMakeScale( 0.5, 0, 0.5)
-        cell.alpha = 0;
+        cell.layer.transform = CATransform3DMakeScale( 0.5, 0.5, 0.5)
+        cell.alpha = 0.5;
         
         //Define the final state (After the animation) and commit the animation
         UIView.beginAnimations("rotation", context: nil)
