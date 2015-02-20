@@ -179,7 +179,7 @@ class Locations: NSObject, CLLocationManagerDelegate {
         
         
         }) { (request, error) -> Void in
-            NSLog("Error - Search API doesnt response")
+            NSLog("AFNetworking Error: Search API did not responded ")
         }
         
     }

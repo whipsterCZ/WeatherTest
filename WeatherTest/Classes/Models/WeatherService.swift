@@ -116,7 +116,7 @@ class WeatherService
             
             
             }) { (request, error) -> Void in
-                NSLog("Error - Weather API doesnt response")
+                NSLog("AFNetworking Error: Weather API did not responded ")
         }
         
     }
