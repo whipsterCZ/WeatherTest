@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
        
         context.locations.addCurrentLocationToList()
+        context.locations.startUpdatingWeather()
+
         
         return true
     }

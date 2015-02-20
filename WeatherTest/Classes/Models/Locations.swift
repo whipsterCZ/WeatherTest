@@ -45,6 +45,7 @@ class Locations: NSObject, CLLocationManagerDelegate {
     var connectionManager = AFHTTPRequestOperationManager()
     
     var userDefaults = NSUserDefaults.standardUserDefaults()
+    var scheduler: NSTimer?
     
     init(apiUrl:String, apiKey:String) {
         self.apiUrl = apiUrl
@@ -81,6 +82,24 @@ class Locations: NSObject, CLLocationManagerDelegate {
         userDefaults.synchronize()
         NSNotificationCenter.defaultCenter().postNotificationName(RELOAD_NOTIFICATION, object: nil)
         
+    }
+    
+    func startUpdatingWeather()
+    {
+        for location in DI.context.locations.locationList {
+            var weather = location.weather //if weather doesnt exists it fetches data automaticaly
+        }
+        let updateInterval = (DI.context.getParameter("weather_update_interval", defaultValue: "1800")! as NSString).doubleValue
+        scheduler = NSTimer.scheduledTimerWithTimeInterval(updateInterval, target: self, selector: "updateWeather", userInfo: nil, repeats: true)
+    }
+    
+    func stopUpdatingWeather() {
+        scheduler?.invalidate()
+    }
+    func updateWeather(){
+        for location in DI.context.locations.locationList {
+            location.weather.fetchWeather()
+        }
     }
     
       

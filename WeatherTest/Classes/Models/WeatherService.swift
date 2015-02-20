@@ -55,12 +55,13 @@ class WeatherService
         
         connectionManager.GET(apiUrl, parameters: params, success: { (request, response) -> Void in
             
-            
+            weather.weatherStartUpdate()
             if let root = response as? NSDictionary {
                 if let data = root["data"] as? NSDictionary
                 {
                     if let error = root["error"] as? NSArray {
                         //no match
+                        weather.isFetching = false
                         return
                     }
                     

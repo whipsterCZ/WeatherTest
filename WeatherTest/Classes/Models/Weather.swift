@@ -36,6 +36,7 @@ class Weather : NSObject
     var forecastList = [Forecast]()
     
     var lastUpdated:NSDate?
+    var isFetching = false
     
     init(latLng:String) {
         self.latLng = latLng
@@ -46,19 +47,30 @@ class Weather : NSObject
    
     func fetchWeather()
     {
+        if ( isFetching) {
+            return
+        }
         
-        let updateInterval = (DI.context.getParameter("weather_update_interval", defaultValue: "1800")! as NSString).doubleValue
-        
-        if ( lastUpdated == nil ||  lastUpdated!.timeIntervalSinceNow > updateInterval) {
+        let updateInterval = (DI.context.getParameter("weather_update_interval", defaultValue: "1800")! as NSString).doubleValue - 1.0
+        var timeIntervalSinceNow: Double = 3600 // hodina default
+        if lastUpdated != nil {
+            timeIntervalSinceNow = -lastUpdated!.timeIntervalSinceNow
+        }
+        if ( timeIntervalSinceNow >= updateInterval) {
            DI.context.weatherService.fetchWeather(self)            
         }
     }
     
+   
+    
+    func weatherStartUpdate() {
+        isFetching = true
+    }
+    
     func weatherDidUpdate() {
-        
+        isFetching = false
         lastUpdated = NSDate()
-        NSNotificationCenter.defaultCenter().postNotificationName(RELOAD_NOTIFICATION, object: self)
-        
+        NSNotificationCenter.defaultCenter().postNotificationName(RELOAD_NOTIFICATION, object: self)        
     }
     
 

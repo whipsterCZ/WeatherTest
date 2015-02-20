@@ -127,7 +127,7 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         //Cell animation
-        cell.layer.transform = CATransform3DMakeScale( 0.5, 0, 0.5)
+        cell.layer.transform = CATransform3DMakeTranslation( -cell.frame.width/3, -cell.frame.origin.y, 0)
         cell.alpha = 0;
         
         //Define the final state (After the animation) and commit the animation

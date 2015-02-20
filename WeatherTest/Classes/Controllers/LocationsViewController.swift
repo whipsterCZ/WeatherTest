@@ -14,7 +14,9 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+
     var locations = DI.context.locations
+    var locationList = [Location]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     }
     
     func reloadData() {
+        locationList = locations.locationList
         tableView.reloadData()
     }
     
@@ -52,7 +55,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.locationList.count
+        return locationList.count
     }
 
     
@@ -63,12 +66,13 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, willDisplayCell cell: WeatherCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         //set Cell content
-        var location = locations.locationList[indexPath.item]
+        var location = locationList[indexPath.item]
         cell.titleLabel.text =  location.city
         cell.weatherLabel.text = location.weather.type
         cell.icon.image = location.weather.iconImage
         cell.isCurrentIcon.hidden = !location.isCurrent
         cell.tempreatureLabel.text = location.weather.tempreature(true)
+        
         
         //Cell animation
         cell.layer.transform = CATransform3DMakeScale( 0.5, 0, 0.5)
@@ -80,6 +84,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
         cell.layer.transform = CATransform3DIdentity;
         cell.alpha = 1;
         UIView.commitAnimations()
+    
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -106,8 +111,12 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
         
-        var action = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "  X   ") { (action, indexPath) -> Void in            
-            self.locations.locationList.removeAtIndex(indexPath.item)
+        var action = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "  X   ") { (action, indexPath) -> Void in
+            var location = self.locationList[indexPath.item]
+//            self.locations.locationList.removeAtIndex(indexPath.item)  //better will be self.locations.locationList.removeObject(location)
+            if let index = find(self.locations.locationList, location) {
+                self.locations.locationList.removeAtIndex(index)
+            }
             self.locations.saveState()
         }
         action.backgroundColor = UIColor(red: 228, green: 141/255, blue: 73/255, alpha: 1)
@@ -116,7 +125,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        locations.selectedLocation = locations.locationList[indexPath.item]
+        locations.selectedLocation = locationList[indexPath.item]
         self.navigationController?.popToRootViewControllerAnimated(true)
         
     }
