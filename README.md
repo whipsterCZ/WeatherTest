@@ -37,8 +37,8 @@ Dependencies:
 - RTLabel - can format
 
 Used tools:
-————————
-- GitHub
+-----------
+- Git & GitHub 
 - Photoshop
 - Spark Inspector
 - Dash (documentation)
