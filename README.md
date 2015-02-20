@@ -10,7 +10,7 @@ Features:
    - App automatically updates weather with NSTimer
 - App is written in **swift** and follows **STRV guideline**
 - App is **fully configurable** with `config.plist`  ( Weather API, weather update interval, default settings... )
-- App uses Storyboards and AutoLayout, `NSNotificationCenter`, Dependecy Injection ( @see DI.swift ), Design patterns, Lazy initialisation, secured connections via **HTTP*S* etc..
+- App uses Storyboards and AutoLayout, `NSNotificationCenter`, Dependecy Injection ( *@see* `DI.swift` ), Design patterns, Lazy initialisation, secured connections via **HTTPS** etc..
 - App has user settings of length & temperature unit - stored via `NSUserDefaults`
 - App can search locations via World Weather Online AP
    - Searched term is **highlighted** in found locations ( even in the middle of  )
@@ -27,7 +27,7 @@ Features:
 Roadmap: 
 =======
 - Sharing is not fully implemented, because it is not crucial for this kind of app. Moreover i doesn’t make sense to share weather via another service than Twitter and Facebook... 
-- There are missing many images for weather (Icon_Big.png) - so i display only Windy, Cloudy, Sunny and Storm 
+- There are missing many images for weather (`Icon_Big.png`) - so i display only Windy, Cloudy, Sunny and Storm 
 - RTLabel (3rd-party library) causes some warning with 64bit iOS Devices (  )
 
 Dependencies:
