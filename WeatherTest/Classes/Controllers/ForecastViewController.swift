@@ -37,6 +37,17 @@ class ForecastViewController: UIViewController, UITableViewDataSource , UITableV
         tableView.reloadData()
     }
     
+    @IBAction func onSwipeRight(sender: AnyObject) {
+        if let tbc = tabBarController as? TabBarController {
+            tbc.prevTab()
+        }
+    }
+    @IBAction func onLeftRight(sender: AnyObject) {
+        if let tbc = tabBarController as? TabBarController {
+            tbc.nextTab()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

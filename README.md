@@ -21,7 +21,7 @@ Features:
 - Custom **TableViewCell animation** for all view controllers
 - Custom **Today View animation**
 `TableView:numberOfRowsInSection:` )
-
+- UI allow to change Tab **onSwipe**
 
 Roadmap: 
 =======
@@ -29,7 +29,6 @@ Roadmap:
 - There are missing many images for weather (`Icon_Big.png`) - so i display only Windy, Cloudy, Sunny and Storm 
 - RTLabel (3rd-party library) causes some warnings on 64bit iOS Devices: NSUInteger cannot be downcast to Int ( 64bit NSUInteger > Int )
 - refresh weather on device **shake**
-- change tab view on **Swipe**
 
 Dependencies:
 =============

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+class TabBarController: UITabBarController , UITabBarControllerDelegate {
     
     @IBOutlet var locationButton: UIBarButtonItem!
     var locations = DI.context.locations
@@ -17,43 +17,53 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.delegate = self
+        
     }
     
-    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem!) {
-        if ( item.title == "Settings") {
+   
+    
+    // MARK: - Navigation
+
+    func nextTab()
+    {
+        if let itemCount = tabBar.items?.count {
+            selectedIndex = (selectedIndex+1) % itemCount
+        }
+    }
+    
+    func prevTab()
+    {
+        if let itemCount = tabBar.items?.count {
+            let index = selectedIndex==0 ? itemCount : selectedIndex
+            selectedIndex = (index-1) % itemCount
+        }
+        
+    }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    }
+    
+    func showLocationVC(sender:AnyObject)
+    {
+        self.performSegueWithIdentifier("locations", sender: sender)        
+    }
+    
+    
+    //MARK: - UITabBarControllerDelegate
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if ( viewController is SettingsViewController ) {
             self.navigationItem.rightBarButtonItem = nil
         } else {
             if ( self.navigationItem.rightBarButtonItem == nil ) {
                 self.navigationItem.rightBarButtonItem = locationButton
             }
         }
-    }
-    
-   
-
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-       
-//        if ( segue.destinationViewController)
         
     }
     
-    func showLocationVC(sender:AnyObject)
-    {
-        
-        self.performSegueWithIdentifier("locations", sender: sender)
-        
-    }
     
 
 }

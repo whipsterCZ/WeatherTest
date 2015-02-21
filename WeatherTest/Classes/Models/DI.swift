@@ -49,16 +49,15 @@ class DI : NSObject {
             apiUrl: DI.context.getParameter("search_api_url")!,
             apiKey: DI.context.getParameter("weather_api_key")!
         )
-        }()
+    }()
     
     
     lazy var weatherService: WeatherService = {
         return WeatherService(
             apiUrl: DI.context.getParameter("weather_api_url")!,
             apiKey: DI.context.getParameter("weather_api_key")!
-        )
-        
-        }()
+        )        
+    }()
     
     lazy var lightBlue = UIColor(red: 95/255, green: 140/255, blue: 1, alpha: 1)
     lazy var darkGray = UIColor(white: 0.2, alpha: 1)

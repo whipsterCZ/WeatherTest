@@ -39,31 +39,6 @@ class TodayViewController: UIViewController {
         animateView()
     }
     
-    func animateView()
-    {
-        containerView.layer.transform =  CATransform3DMakeRotation(2, 1, -1, 0)
-        containerView.layer.transform.m34 = 1.0 / 2500
-        containerView.alpha = 0
-        
-        iconImageView.layer.transform = CATransform3DMakeTranslation(0, -250, 0)
-        locationLabel.layer.transform =  CATransform3DMakeTranslation(-250, 0, 0)
-        summaryLabel.layer.transform =  CATransform3DMakeTranslation(250, 0, 0)
-        shareLabel.layer.transform =  CATransform3DMakeTranslation(0, 250, 0)
-        
-        UIView.beginAnimations("today", context: nil)
-        UIView.setAnimationDuration(1.0)
-        
-        iconImageView.layer.transform = CATransform3DIdentity
-        locationLabel.layer.transform =  CATransform3DIdentity
-        summaryLabel.layer.transform =  CATransform3DIdentity
-        shareLabel.layer.transform =  CATransform3DIdentity
-        
-        containerView.layer.transform = CATransform3DIdentity
-        containerView.alpha = 1
-        
-        UIView.commitAnimations()
-    }
-    
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -90,6 +65,17 @@ class TodayViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onSwipeRight(sender: AnyObject) {
+        if let tbc = tabBarController as? TabBarController {
+            tbc.prevTab()
+        }
+    }
+    @IBAction func onLeftRight(sender: AnyObject) {
+        if let tbc = tabBarController as? TabBarController {
+            tbc.nextTab()
+        }
+    }
+    
     @IBAction func sharePressed(sender: AnyObject) {
         NSLog("Not implemented yet")
         
@@ -102,9 +88,32 @@ class TodayViewController: UIViewController {
             
         })
         
-
+    }
+    
+    
+    func animateView()
+    {
+        containerView.layer.transform =  CATransform3DMakeRotation(2, 1, -1, 0)
+        containerView.layer.transform.m34 = 1.0 / 2500
+        containerView.alpha = 0
         
+        iconImageView.layer.transform = CATransform3DMakeTranslation(0, -250, 0)
+        locationLabel.layer.transform =  CATransform3DMakeTranslation(-250, 0, 0)
+        summaryLabel.layer.transform =  CATransform3DMakeTranslation(250, 0, 0)
+        shareLabel.layer.transform =  CATransform3DMakeTranslation(0, 250, 0)
         
+        UIView.beginAnimations("today", context: nil)
+        UIView.setAnimationDuration(1.0)
+        
+        iconImageView.layer.transform = CATransform3DIdentity
+        locationLabel.layer.transform =  CATransform3DIdentity
+        summaryLabel.layer.transform =  CATransform3DIdentity
+        shareLabel.layer.transform =  CATransform3DIdentity
+        
+        containerView.layer.transform = CATransform3DIdentity
+        containerView.alpha = 1
+        
+        UIView.commitAnimations()
     }
 
     /*

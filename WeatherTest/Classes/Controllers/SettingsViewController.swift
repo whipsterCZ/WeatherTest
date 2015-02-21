@@ -41,9 +41,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
 
+    @IBAction func onSwipeRight(sender: AnyObject) {
+        if let tbc = tabBarController as? TabBarController {
+            tbc.prevTab()
+        }
+    }
+    @IBAction func onLeftRight(sender: AnyObject) {
+        if let tbc = tabBarController as? TabBarController {
+            tbc.nextTab()
+        }
+    }
     
     // MARK: - Navigation
-//    
+
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 //        if ( segue.identifier == "settingOption") {
 //            var settingOptionVC = segue.destinationViewController as UITableViewController
