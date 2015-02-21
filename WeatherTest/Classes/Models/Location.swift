@@ -9,19 +9,21 @@
 import Foundation
 
 
-class Location: NSObject {
+class Location: NSObject, Equatable {
 
 
     var latLng: String
     var city: String
+    var region:String
     var country: String
     var isCurrent = false
 //    var isSelected = false
     
-    init(latLng:String, city:String, country:String) {
+    init(latLng:String, city:String, region:String, country:String) {
         self.latLng = latLng
         self.city = city
         self.country = country
+        self.region = region
     }
     
     lazy var weather: Weather = {        
@@ -32,19 +34,14 @@ class Location: NSObject {
         return "\(city), \(country)"
     }
     
-    
-    class var defaultLocation: Location  {
-        get {
-            var latLng = DI.context.locations.formatLatLng(50.083, lng: 14.467)
-            let location = Location(latLng: latLng, city: "Prague", country: "Czech Republic")
-//            location.isSelected = true
-            return location
-        }
+    func getSearchedTitle() ->String {
+        return "\(city), \(region)"
     }
     
     func encodeWithCoder(aCoder: NSCoder!) {
         aCoder.encodeObject(latLng, forKey: "latLng")
         aCoder.encodeObject(city , forKey: "city")
+        aCoder.encodeObject(region, forKey: "region")
         aCoder.encodeObject(country, forKey: "country")
         aCoder.encodeBool(isCurrent, forKey: "isCurrent")
 //        aCoder.encodeBool(isSelected, forKey: "isSelected")
@@ -53,6 +50,7 @@ class Location: NSObject {
     init(coder aDecoder: NSCoder!) {
         latLng =    aDecoder.decodeObjectForKey("latLng") as String
         city =      aDecoder.decodeObjectForKey("city") as String
+        region =   aDecoder.decodeObjectForKey("region") as String
         country =   aDecoder.decodeObjectForKey("country") as String
 //        isSelected = aDecoder.decodeBoolForKey("isSelected")
         isCurrent = aDecoder.decodeBoolForKey("isCurrent")

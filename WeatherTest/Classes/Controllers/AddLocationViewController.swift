@@ -104,7 +104,7 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
         if tableView == self.tableView {
             cell.label?.text = "text"
         } else {
-            var text = locationList[indexPath.item].getTitle()
+            var text = locationList[indexPath.item].getSearchedTitle()
             text = markSearchedText(searchBar.text, found: text)
             cell.label?.text = text
         }
@@ -125,19 +125,7 @@ class AddLocationViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        
-        var offset =  CGFloat( -indexPath.item ) * ( CGFloat(cell.frame.width) / CGFloat( locationList.count )  )
-        cell.layer.transform = CATransform3DMakeTranslation( offset ,0, 0)
-        cell.alpha = 0.5;
-        
-        //Define the final state (After the animation) and commit the animation
-        UIView.beginAnimations("rotation", context: nil)
-        UIView.setAnimationDuration(0.5)
-        cell.layer.transform = CATransform3DIdentity;
-        cell.alpha = 1;
-        UIView.commitAnimations()
-        
+        DI.context.animateTableCell(cell)        
     }
     
     //MARK: - UISearchBarDelegate

@@ -21,6 +21,10 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var windDirectionLabel: UILabel!
     @IBOutlet weak var windSpeedLabel: UILabel!
     
+    @IBOutlet weak var shareLabel: UIButton!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var isCurrentIcon: UIImageView!
+    
     var location = DI.context.locations.selectedLocation
     
     override func viewDidLoad() {
@@ -32,7 +36,32 @@ class TodayViewController: UIViewController {
         self.navigationController?.navigationBar.topItem?.title = "Today"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "populate", name: RELOAD_NOTIFICATION, object: nil)
         populate()
+        animateView()
+    }
+    
+    func animateView()
+    {
+        containerView.layer.transform =  CATransform3DMakeRotation(2, 1, -1, 0)
+        containerView.layer.transform.m34 = 1.0 / 2500
+        containerView.alpha = 0
         
+        iconImageView.layer.transform = CATransform3DMakeTranslation(0, -250, 0)
+        locationLabel.layer.transform =  CATransform3DMakeTranslation(-250, 0, 0)
+        summaryLabel.layer.transform =  CATransform3DMakeTranslation(250, 0, 0)
+        shareLabel.layer.transform =  CATransform3DMakeTranslation(0, 250, 0)
+        
+        UIView.beginAnimations("today", context: nil)
+        UIView.setAnimationDuration(1.0)
+        
+        iconImageView.layer.transform = CATransform3DIdentity
+        locationLabel.layer.transform =  CATransform3DIdentity
+        summaryLabel.layer.transform =  CATransform3DIdentity
+        shareLabel.layer.transform =  CATransform3DIdentity
+        
+        containerView.layer.transform = CATransform3DIdentity
+        containerView.alpha = 1
+        
+        UIView.commitAnimations()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -45,6 +74,7 @@ class TodayViewController: UIViewController {
         iconImageView.image = weather.iconImageBig
         locationLabel.text = location.getTitle()
         summaryLabel.text = weather.summary()
+        isCurrentIcon.hidden = !location.isCurrent
         
         rainChanceLabel.text = weather.rainPercentage
         rainAmmountLabel.text = weather.rainAmmount()

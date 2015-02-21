@@ -18,17 +18,18 @@ Features:
    - using `CoreData` is not recommended in this scenario. 
    - A) There is few items
    - B) We require more than one `ManagedObjectContext`, because we don't want to manage locations found via location search - these are only temporary record.  Merging found item to managed locationList is too complicated
-- Custom TableCell animation for location view controller
-- Another **custom TableCell animation** location search view controller
-- Another TableCell animation for Forecast view controller   
-   - There are presented some additional (duplicate) rows here ( for demo purpose - it can be easily turned of in method `TableView:numberOfRowsInSection:` )
+- Custom **TableViewCell animation** for all view controllers
+- Custom **Today View animation**
+`TableView:numberOfRowsInSection:` )
 
 
 Roadmap: 
 =======
 - Sharing is not fully implemented, because it is not crucial for this kind of app. Moreover i doesn’t make sense to share weather via another service than Twitter and Facebook... 
 - There are missing many images for weather (`Icon_Big.png`) - so i display only Windy, Cloudy, Sunny and Storm 
-- RTLabel (3rd-party library) causes some warning with 64bit iOS Devices (  )
+- RTLabel (3rd-party library) causes some warnings on 64bit iOS Devices: NSUInteger cannot be downcast to Int ( 64bit NSUInteger > Int )
+- refresh weather on device **shake**
+- change tab view on **Swipe**
 
 Dependencies:
 =============

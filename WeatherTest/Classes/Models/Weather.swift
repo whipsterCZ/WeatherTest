@@ -8,13 +8,13 @@
 
 import Foundation
 
-let WEATHER_NA = " "
+let WEATHER_NA = "?"
 
 class Weather : NSObject
 {
     
     var latLng: String
-    var type = "Now available"
+    var type = "Not available"
     var tempreatureC = WEATHER_NA
     var tempreatureF = WEATHER_NA
     var iconImageBig = UIImage()
@@ -102,9 +102,9 @@ class Weather : NSObject
     func windSpeed() -> String
     {
         if ( DI.context.settings.lengthUnit == .Metric ) {
-            return windSpeedMetric + " m"
+            return windSpeedMetric + " m/s"
         } else {
-            return windSpeedImperial + " ml"
+            return windSpeedImperial + " ml/s"
         }
     }
     

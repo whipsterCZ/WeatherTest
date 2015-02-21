@@ -42,6 +42,8 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
     override init () {
         self.userDefaults = NSUserDefaults.standardUserDefaults()
         super.init()
+        
+        NSLog("init settings")
         loadState()        
         
     }
@@ -85,6 +87,7 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
         userDefaults.setValue(tempreatureUnit?.rawValue, forKey: SettingOptions.TempreatureUnit.rawValue)
         userDefaults.setValue(lengthUnit?.rawValue, forKey: SettingOptions.LengthUnit.rawValue)
         userDefaults.synchronize();
+//        NSNotificationCenter.defaultCenter().postNotificationName(RELOAD_NOTIFICATION, object: nil)
         
     }
     

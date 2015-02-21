@@ -357,10 +357,13 @@
                     <tabBarItem key="tabBarItem" title="Today" image="Today" id="acW-dT-cKf"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="containerView" destination="4mG-mO-EJr" id="yEI-kb-OS1"/>
                         <outlet property="iconImageView" destination="niF-jf-Oow" id="2Qa-on-icM"/>
+                        <outlet property="isCurrentIcon" destination="Ueg-0b-EJW" id="2Tb-cB-z2R"/>
                         <outlet property="locationLabel" destination="CpS-JN-ba0" id="Edz-qa-BZR"/>
                         <outlet property="rainAmmountLabel" destination="ERZ-Qy-cDj" id="E65-U1-dzV"/>
                         <outlet property="rainChanceLabel" destination="OCH-d9-7D4" id="zgw-k9-E0f"/>
+                        <outlet property="shareLabel" destination="4kx-HR-jHk" id="351-CX-RYM"/>
                         <outlet property="summaryLabel" destination="wqR-hU-Udc" id="GSR-hy-N2n"/>
                         <outlet property="tempreatureLabel" destination="pxg-TA-Yuh" id="9hD-1V-W0k"/>
                         <outlet property="windDirectionLabel" destination="uEQ-KC-orb" id="NvV-eg-Pmu"/>

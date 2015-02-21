@@ -26,7 +26,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather Test" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="53" y="33" width="228" height="39"/>
+                    <rect key="frame" x="53" y="100" width="228" height="39"/>
                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="39"/>
                     <color key="textColor" red="0.20000001789999999" green="0.20000001789999999" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
@@ -38,7 +38,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Sun_Big" translatesAutoresizingMaskIntoConstraints="NO" id="8vg-d9-4hT">
-                    <rect key="frame" x="117" y="80" width="87" height="87"/>
+                    <rect key="frame" x="117" y="147" width="87" height="87"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -46,7 +46,7 @@
                 <constraint firstAttribute="centerX" secondItem="8vg-d9-4hT" secondAttribute="centerX" id="57w-ya-Nd3"/>
                 <constraint firstAttribute="centerY" secondItem="8vg-d9-4hT" secondAttribute="centerY" constant="0.5" id="9aj-mK-0yZ"/>
                 <constraint firstItem="CO0-Ue-GHn" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="top" constant="47" id="9v4-Nq-34m"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="33" id="FWV-pT-K5F"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="FWV-pT-K5F"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="CO0-Ue-GHn" secondAttribute="bottom" constant="8" id="GgQ-qk-6Mi"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>

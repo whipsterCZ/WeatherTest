@@ -50,7 +50,7 @@ class ForecastViewController: UIViewController, UITableViewDataSource , UITableV
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forecastList.count*3
+        return forecastList.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -58,25 +58,16 @@ class ForecastViewController: UIViewController, UITableViewDataSource , UITableV
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: WeatherCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        var index = indexPath.item % forecastList.count
-        var day = forecastList[index]
+       var day = forecastList[indexPath.item]
         
         cell.titleLabel.text = day.weekday
         cell.tempreatureLabel.text = day.tempreature(true)
         cell.icon.image = DI.context.locations.selectedLocation.weather.iconImage
         cell.weatherLabel.text = DI.context.locations.selectedLocation.weather.type
      
+        DI.context.animateTableCell(cell)
         
-        //Cell animation
-        cell.layer.transform = CATransform3DRotate(CATransform3DMakeRotation(-1, 1, 0, 0), 1, -1, 1, 0)
-        cell.alpha = 0;
         
-        //Define the final state (After the animation) and commit the animation
-        UIView.beginAnimations("rotation", context: nil)
-        UIView.setAnimationDuration(0.5)
-        cell.layer.transform = CATransform3DIdentity;
-        cell.alpha = 1;
-        UIView.commitAnimations()
     }
 
 }

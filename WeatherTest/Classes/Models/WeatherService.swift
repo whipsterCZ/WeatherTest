@@ -21,6 +21,7 @@ class WeatherService
         self.apiUrl = apiUrl
         self.apiKey = apiKey
         
+        NSLog("init weather")
         
     }
     

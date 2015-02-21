@@ -18,14 +18,17 @@ class Locations: NSObject, CLLocationManagerDelegate {
     private var _selectedLocation: Location?
     var selectedLocation : Location {
         set(location) {
-            _selectedLocation = location
+            //Add to locationList / if not contained
+            if self.addLocationToList(location) != nil  {
+                _selectedLocation = location
+            } else {
+                // only identitical instance
+                _selectedLocation = self.getLocationInstanceFormList(location)
+            }
             saveState()
         }
         get {
-            if let location = _selectedLocation {
-                return location
-            }
-            return Location.defaultLocation
+            return _selectedLocation!
         }
     }
     var locationList = [Location]()
@@ -52,6 +55,8 @@ class Locations: NSObject, CLLocationManagerDelegate {
         self.apiKey = apiKey
         
         super.init()
+        NSLog("init location")
+        
         loadState()
     }
    
@@ -63,10 +68,30 @@ class Locations: NSObject, CLLocationManagerDelegate {
             locationList = NSKeyedUnarchiver.unarchiveObjectWithData(locationListData) as [Location]
         }
         
-        if let selectedLocationData = userDefaults.dataForKey("selectedLocationData") {
-            _selectedLocation = NSKeyedUnarchiver.unarchiveObjectWithData(selectedLocationData) as? Location
+        if let latLng = userDefaults.objectForKey("selectedLatLng") as? String {
+            if let listedLocation = getLocationFromList(latLng) {
+                _selectedLocation = listedLocation
+            } else {
+                _selectedLocation = defaultLocation
+            }
+        } else {
+            _selectedLocation = defaultLocation //it loads default location and add it to locationList
         }
         
+    }
+    
+    func getLocationInstanceFormList(location:Location) -> Location?
+    {
+        return getLocationFromList(location.latLng)
+    }
+    func getLocationFromList(latLng:String) -> Location?
+    {
+        for location in locationList {
+            if ( location.latLng == latLng) {
+                return location
+            }
+        }
+        return nil
     }
     
     
@@ -76,8 +101,7 @@ class Locations: NSObject, CLLocationManagerDelegate {
         var locationListData = NSKeyedArchiver.archivedDataWithRootObject(locationList)
         userDefaults.setObject(locationListData, forKey: "locationListData")
         
-        var selectedLocationData = NSKeyedArchiver.archivedDataWithRootObject(selectedLocation)
-        userDefaults.setObject(selectedLocationData, forKey: "selectedLocationData")
+        userDefaults.setObject(selectedLocation.latLng, forKey: "selectedLatLng")
         
         userDefaults.synchronize()
         NSNotificationCenter.defaultCenter().postNotificationName(RELOAD_NOTIFICATION, object: nil)
@@ -86,9 +110,12 @@ class Locations: NSObject, CLLocationManagerDelegate {
     
     func startUpdatingWeather()
     {
+        var weather: Weather?
         for location in DI.context.locations.locationList {
             var weather = location.weather //if weather doesnt exists it fetches data automaticaly
         }
+        weather = selectedLocation.weather //if weather doesnt exists it fetches data automaticaly
+        
         let updateInterval = (DI.context.getParameter("weather_update_interval", defaultValue: "1800")! as NSString).doubleValue
         scheduler = NSTimer.scheduledTimerWithTimeInterval(updateInterval, target: self, selector: "updateWeather", userInfo: nil, repeats: true)
     }
@@ -105,7 +132,6 @@ class Locations: NSObject, CLLocationManagerDelegate {
       
     func addLocationToList(location:Location) -> Location?
     {
-//        if locationList.filter({ $0.latLng == location.latLng }).count == 0 {
         if !contains(locationList, location) {
             locationList.append(location)
             saveState()
@@ -120,16 +146,22 @@ class Locations: NSObject, CLLocationManagerDelegate {
             locationFoundHandler = { (locations:[Location]) -> Void in
                 if let location = locations.first {
                     location.isCurrent = true
-                    self.addLocationToList(location)
+//                    self.addLocationToList(location)
                     self.selectedLocation = location
-                    self.currentLocationAdded = true
+                    self.currentLocationAdded = true                    
                 } else {
                     NSLog("My WeatherLocation is unknown, despite my coreLocation exists")
                 }
             }
             self.findCurrentCoreLocation()
         }
-    }     
+    }
+    
+    lazy var defaultLocation: Location = {
+        let location = Location(latLng: "50.083,14.467", city: "Prague", region:"Czech Republic", country: "Czech Republic")
+            //location.isSelected = true
+            return location
+    }()
     
     //MARK: - Weather Location API
     func searchLocations(query:String, limit:Int, success:([Location])->Void) {
@@ -165,11 +197,12 @@ class Locations: NSObject, CLLocationManagerDelegate {
                         if let loc = resultLocation as? NSDictionary  {
                             var city = ((loc["areaName"] as [NSDictionary])[0] as NSDictionary)["value"] as String
                             var country = ((loc["country"] as [NSDictionary])[0] as NSDictionary)["value"] as String
+                            var region = ((loc["region"] as [NSDictionary])[0] as NSDictionary)["value"] as String
                             if country == "United States of America" { country = "USA" }
                             var latLng = self.formatLatLng(loc["latitude"] as String, lng:loc["longitude"] as String)
 //                            var weatherUrl = ((loc.["weatherUrl"] as NSArray)[0] as NSDictionary)["value"] as String
                            
-                            let location = Location(latLng:latLng, city:city, country:country)
+                            let location = Location(latLng:latLng, city:city, region:region, country:country)
                             foundLocations.append(location)
                         }
                     }

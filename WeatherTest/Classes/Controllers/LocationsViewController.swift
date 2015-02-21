@@ -73,18 +73,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
         cell.isCurrentIcon.hidden = !location.isCurrent
         cell.tempreatureLabel.text = location.weather.tempreature(true)
         
-        
-        //Cell animation
-        cell.layer.transform = CATransform3DMakeScale( 0.5, 0.5, 0.5)
-        cell.alpha = 0.5;
-        
-        //Define the final state (After the animation) and commit the animation
-        UIView.beginAnimations("rotation", context: nil)
-        UIView.setAnimationDuration(0.5)
-        cell.layer.transform = CATransform3DIdentity;
-        cell.alpha = 1;
-        UIView.commitAnimations()
-    
+        DI.context.animateTableCell(cell)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
