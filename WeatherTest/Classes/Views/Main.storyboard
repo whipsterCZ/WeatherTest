@@ -179,7 +179,7 @@
                                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Rain" translatesAutoresizingMaskIntoConstraints="NO" id="6rG-mA-eRe">
                                                         <rect key="frame" x="152" y="0.0" width="16" height="19"/>
                                                     </imageView>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="Wind" translatesAutoresizingMaskIntoConstraints="NO" id="6o3-FO-dBg">
+                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="WindSmall" translatesAutoresizingMaskIntoConstraints="NO" id="6o3-FO-dBg">
                                                         <rect key="frame" x="98" y="75" width="25" height="16"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OCH-d9-7D4">
@@ -200,8 +200,8 @@
                                                         <color key="textColor" red="0.20000001789999999" green="0.20000001789999999" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUF-w9-Tt3">
-                                                        <rect key="frame" x="92" y="96" width="37" height="15"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUF-w9-Tt3">
+                                                        <rect key="frame" x="91" y="96" width="37" height="15"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="15"/>
                                                         <color key="textColor" red="0.20000001789999999" green="0.20000001789999999" blue="0.20000001789999999" alpha="1" colorSpace="deviceRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -690,7 +690,7 @@
         <image name="Settings" width="23" height="23"/>
         <image name="Sun_Big" width="87" height="87"/>
         <image name="Today" width="24" height="24"/>
-        <image name="Wind" width="25" height="16"/>
+        <image name="WindSmall" width="25" height="16"/>
         <image name="locationAddBtn" width="65" height="65"/>
     </resources>
 </document>

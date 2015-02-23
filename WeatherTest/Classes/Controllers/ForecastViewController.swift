@@ -73,7 +73,7 @@ class ForecastViewController: UIViewController, UITableViewDataSource , UITableV
         
         cell.titleLabel.text = day.weekday
         cell.tempreatureLabel.text = day.tempreature(true)
-        cell.icon.image = DI.context.locations.selectedLocation.weather.iconImage
+        cell.icon.image = day.iconImage
         cell.weatherLabel.text = DI.context.locations.selectedLocation.weather.type
      
         DI.context.animateTableCell(cell)
