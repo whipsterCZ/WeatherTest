@@ -80,7 +80,7 @@ class TodayViewController: UIViewController {
     @IBAction func onSwipeUp()
     {
         if DI.context.locations.selectNextLocation() {
-            animateViewFast(-1)
+            animateViewFast(1)
         }
     }
     
