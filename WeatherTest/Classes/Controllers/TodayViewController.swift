@@ -15,6 +15,7 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     
+    @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var rainChanceLabel: UILabel!
     @IBOutlet weak var rainAmmountLabel: UILabel!
     @IBOutlet weak var tempreatureLabel: UILabel!
@@ -29,13 +30,13 @@ class TodayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        populate()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.topItem?.title = "Today"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "populate", name: RELOAD_NOTIFICATION, object: nil)
-        populate()
+        
         animateView()
     }
     
@@ -70,9 +71,23 @@ class TodayViewController: UIViewController {
             tbc.prevTab()
         }
     }
-    @IBAction func onLeftRight(sender: AnyObject) {
+    @IBAction func onSwipeLeft(sender: AnyObject) {
         if let tbc = tabBarController as? TabBarController {
             tbc.nextTab()
+        }
+    }
+    
+    @IBAction func onSwipeUp()
+    {
+        if DI.context.locations.selectNextLocation() {
+            animateViewFast(-1)
+        }
+    }
+    
+    @IBAction func onSwipeDown()
+    {
+        if DI.context.locations.selectPrevLocation() {
+            animateViewFast(-1)
         }
     }
     
@@ -83,8 +98,7 @@ class TodayViewController: UIViewController {
         var text = "Weather Test App for STRV"
        
         var activityVC = UIActivityViewController(activityItems: [text, url], applicationActivities: nil)
-        navigationController?.presentViewController(activityVC, animated: true, completion: { () -> Void in
-            
+        navigationController?.presentViewController(activityVC, animated: true, completion: { () -> Void in            
             
         })
         
@@ -101,6 +115,8 @@ class TodayViewController: UIViewController {
         locationLabel.layer.transform =  CATransform3DMakeTranslation(-250, 0, 0)
         summaryLabel.layer.transform =  CATransform3DMakeTranslation(250, 0, 0)
         shareLabel.layer.transform =  CATransform3DMakeTranslation(0, 250, 0)
+        detailView.layer.transform = CATransform3DMakeTranslation(0, 50, 0)
+        
         
         UIView.beginAnimations("today", context: nil)
         UIView.setAnimationDuration(1.0)
@@ -109,7 +125,28 @@ class TodayViewController: UIViewController {
         locationLabel.layer.transform =  CATransform3DIdentity
         summaryLabel.layer.transform =  CATransform3DIdentity
         shareLabel.layer.transform =  CATransform3DIdentity
+        detailView.layer.transform = CATransform3DIdentity
         
+        containerView.layer.transform = CATransform3DIdentity
+        containerView.alpha = 1
+        
+        UIView.commitAnimations()
+    }
+    
+    func animateViewFast(direction: CGFloat)
+    {
+
+        containerView.layer.transform = CATransform3DMakeTranslation(0, (direction * containerView.frame.height)/1.5, 0)
+        containerView.alpha = 0
+       
+        iconImageView.layer.transform =  CATransform3DMakeRotation(2 , 1,0, 0)
+        iconImageView.layer.transform.m34 = 1.0 / 2500
+        
+        
+        UIView.beginAnimations("today", context: nil)
+        UIView.setAnimationDuration(0.5)
+        
+        iconImageView.layer.transform = CATransform3DIdentity
         containerView.layer.transform = CATransform3DIdentity
         containerView.alpha = 1
         

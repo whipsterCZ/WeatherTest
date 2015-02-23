@@ -21,7 +21,8 @@ Features:
 - Custom **TableViewCell animation** for all view controllers
 - Custom **Today View animation**
 `TableView:numberOfRowsInSection:` )
-- UI allow to change Tab **onSwipe**
+- TabBarController UI allow to change Tab **onSwipe left/right**
+- `TodayViewController` UI allow to change selected location *onSwipe up/down*
 
 Roadmap: 
 =======

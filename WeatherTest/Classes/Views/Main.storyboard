@@ -361,12 +361,15 @@
                         </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="YQW-YV-5bL" appends="YES" id="x8e-LJ-qVb"/>
+                            <outletCollection property="gestureRecognizers" destination="hZC-1C-Vmc" appends="YES" id="ciS-66-aR5"/>
+                            <outletCollection property="gestureRecognizers" destination="XOD-zV-Lfz" appends="YES" id="fe0-y6-uWw"/>
                         </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Today" image="Today" id="acW-dT-cKf"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="containerView" destination="4mG-mO-EJr" id="yEI-kb-OS1"/>
+                        <outlet property="detailView" destination="mXq-cS-efL" id="XaJ-44-8fr"/>
                         <outlet property="iconImageView" destination="niF-jf-Oow" id="2Qa-on-icM"/>
                         <outlet property="isCurrentIcon" destination="Ueg-0b-EJW" id="2Tb-cB-z2R"/>
                         <outlet property="locationLabel" destination="CpS-JN-ba0" id="Edz-qa-BZR"/>
@@ -382,12 +385,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="left" id="cWb-Yp-ire">
                     <connections>
-                        <action selector="onLeftRight:" destination="9pv-A4-QxB" id="eeB-NM-hzE"/>
+                        <action selector="onSwipeLeft:" destination="9pv-A4-QxB" id="1pQ-fX-rP6"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="right" id="YQW-YV-5bL">
                     <connections>
                         <action selector="onSwipeRight:" destination="9pv-A4-QxB" id="IdX-eC-Iot"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="hZC-1C-Vmc">
+                    <connections>
+                        <action selector="onSwipeUp" destination="9pv-A4-QxB" id="0SY-J7-V9g"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="XOD-zV-Lfz">
+                    <connections>
+                        <action selector="onSwipeDown" destination="9pv-A4-QxB" id="ShR-ud-vCt"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -436,7 +449,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="left" id="Jcx-PJ-TbG">
                     <connections>
-                        <action selector="onLeftRight:" destination="8rJ-Kc-sve" id="Pyo-81-Hx9"/>
+                        <action selector="onSwipeLeft:" destination="8rJ-Kc-sve" id="Laz-68-IO5"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="right" id="8HS-tn-Bev">
@@ -651,7 +664,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gq9-FI-2vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="left" id="vp3-IO-aDS">
                     <connections>
-                        <action selector="onLeftRight:" destination="Bwh-TC-FxS" id="IYB-nt-TkE"/>
+                        <action selector="onSwipeLeft:" destination="Bwh-TC-FxS" id="JeS-mB-mix"/>
                     </connections>
                 </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="right" id="Lh7-GW-41b">

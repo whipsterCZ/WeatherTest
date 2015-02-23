@@ -42,7 +42,7 @@ class ForecastViewController: UIViewController, UITableViewDataSource , UITableV
             tbc.prevTab()
         }
     }
-    @IBAction func onLeftRight(sender: AnyObject) {
+    @IBAction func onSwipeLeft(sender: AnyObject) {
         if let tbc = tabBarController as? TabBarController {
             tbc.nextTab()
         }

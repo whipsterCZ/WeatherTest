@@ -161,6 +161,31 @@ class Locations: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    func selectNextLocation() -> Bool {
+        if ( locationList.count > 1 ) {
+            if let index = find(locationList, selectedLocation) {
+                var newIndex = (index+1 ) % locationList.count
+                selectedLocation = locationList[newIndex]
+                notifyChange()
+                return true
+            }
+        }
+        return false
+    }
+    
+    func selectPrevLocation() -> Bool {
+        if ( locationList.count > 1 ) {
+            if let index = find(locationList, selectedLocation) {
+                var newIndex = index==0 ? (locationList.count-1) : (index-1)
+               selectedLocation = locationList[newIndex]
+               notifyChange()
+               return true
+            }
+        }
+        return false
+        
+    }
+    
     lazy var defaultLocation: Location = {
         let location = Location(latLng: "50.083,14.467", city: "Prague", region:"Czech Republic", country: "Czech Republic")
             //location.isSelected = true

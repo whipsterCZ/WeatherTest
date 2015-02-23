@@ -46,7 +46,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             tbc.prevTab()
         }
     }
-    @IBAction func onLeftRight(sender: AnyObject) {
+    @IBAction func onSwipeLeft(sender: AnyObject) {
         if let tbc = tabBarController as? TabBarController {
             tbc.nextTab()
         }

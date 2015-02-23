@@ -36,7 +36,7 @@ class TabBarController: UITabBarController , UITabBarControllerDelegate {
     {
         if let itemCount = tabBar.items?.count {
             let index = selectedIndex==0 ? itemCount : selectedIndex
-            selectedIndex = (index-1) % itemCount
+            selectedIndex = index-1
         }
         
     }

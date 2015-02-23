@@ -123,7 +123,7 @@ class Weather : NSObject
     
     func summary()->String
     {
-        return tempreature(false) + " " + type
+        return tempreature(false) + " | " + type
     }
     
     
