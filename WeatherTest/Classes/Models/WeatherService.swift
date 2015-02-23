@@ -89,7 +89,7 @@ class WeatherService
                         var dayFormatter = NSDateFormatter()
                         dayFormatter.dateFormat = "EEEE"
                         
-//                        weather.forecastList = [Forecast]()
+                        weather.forecastList = [Forecast]()
                         
                         for forecast in forecasts {
                             
