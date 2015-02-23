@@ -25,7 +25,7 @@ class Locations: NSObject, CLLocationManagerDelegate {
                 // only identitical instance
                 _selectedLocation = self.getLocationInstanceFormList(location)
             }
-            saveState()
+            notifyChange()
         }
         get {
             return _selectedLocation!
@@ -104,8 +104,12 @@ class Locations: NSObject, CLLocationManagerDelegate {
         userDefaults.setObject(selectedLocation.latLng, forKey: "selectedLatLng")
         
         userDefaults.synchronize()
-        NSNotificationCenter.defaultCenter().postNotificationName(RELOAD_NOTIFICATION, object: nil)
         
+    }
+    
+    func notifyChange()
+    {
+        NSNotificationCenter.defaultCenter().postNotificationName(RELOAD_NOTIFICATION, object: nil)
     }
     
     func startUpdatingWeather()
@@ -134,7 +138,7 @@ class Locations: NSObject, CLLocationManagerDelegate {
     {
         if !contains(locationList, location) {
             locationList.append(location)
-            saveState()
+            notifyChange()
             return location
         }
         return nil

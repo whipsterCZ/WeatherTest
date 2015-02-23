@@ -30,6 +30,8 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
          NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData", name: RELOAD_NOTIFICATION, object: nil)
+        
+        animateAddButton()
         self.navigationController?.navigationBar.hidden = false
         reloadData()
         
@@ -47,6 +49,22 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
         locationList = locations.locationList
         tableView.reloadData()
     }
+    
+    
+    func animateAddButton() {
+        
+        var animatedView = addButton
+        animatedView.layer.transform = CATransform3DMakeTranslation(0, animatedView.frame.height, 0)
+        
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            animatedView.layer.transform = CATransform3DIdentity;
+        }) { (finished) -> Void in
+            
+        }
+        
+        
+    }
+    
     
     // MARK: - Table view data source
 
@@ -90,23 +108,21 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == .Delete {
-//            
-//            DI.context.managedObjectContext!.deleteObject(locations.locationList[indexPath.item])
-//            locations.locationList.removeAtIndex(indexPath.item)
-//            tableView.reloadData()
-//        }
+        //This method allow to show edit actions
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
         
         var action = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "  X   ") { (action, indexPath) -> Void in
             var location = self.locationList[indexPath.item]
-//            self.locations.locationList.removeAtIndex(indexPath.item)  //better will be self.locations.locationList.removeObject(location)
+            
+            self.locationList.removeAtIndex(indexPath.item)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Top)
+            
             if let index = find(self.locations.locationList, location) {
                 self.locations.locationList.removeAtIndex(index)
             }
-            self.locations.saveState()
+            
         }
         action.backgroundColor = UIColor(red: 228, green: 141/255, blue: 73/255, alpha: 1)
         
@@ -146,6 +162,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate {
     }
     
     func donePressed(sender:AnyObject? ) {
+        locations.saveState()
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     

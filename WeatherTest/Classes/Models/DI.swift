@@ -42,6 +42,7 @@ class DI : NSObject {
         }()
     
     //MARK: - Services
+    
     lazy var settings = Settings()
     
     lazy var locations: Locations = {
@@ -61,6 +62,13 @@ class DI : NSObject {
     
     lazy var lightBlue = UIColor(red: 95/255, green: 140/255, blue: 1, alpha: 1)
     lazy var darkGray = UIColor(white: 0.2, alpha: 1)
+    
+    //MARK - Functions
+    func save()
+    {
+        DI.context.locations.saveState()
+        DI.context.settings.saveState()
+    }
     
     func animateTableCell(cell:UITableViewCell) {
         

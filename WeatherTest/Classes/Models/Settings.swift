@@ -62,7 +62,6 @@ class Settings: NSObject, UITableViewDataSource, UITableViewDelegate
         case .LengthUnit:       self.lengthUnit = LengthUnit(rawValue: value)
         case .TempreatureUnit:  self.tempreatureUnit = TempreatureUnit(rawValue: value)
         }
-        saveState()
     }
     
     func loadState() {
