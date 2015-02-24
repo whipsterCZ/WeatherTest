@@ -30,13 +30,12 @@ class TodayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        populate()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.topItem?.title = "Today"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "populate", name: RELOAD_NOTIFICATION, object: nil)
-        
+        populate()
         animateView()
     }
     
