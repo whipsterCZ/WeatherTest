@@ -25,6 +25,7 @@ class ForecastViewController: UIViewController, UITableViewDataSource , UITableV
     override func viewWillAppear(animated: Bool) {        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData", name: RELOAD_NOTIFICATION, object: nil)
         self.navigationController?.topViewController.title = DI.context.locations.selectedLocation.city
+        self.navigationController?.navigationBar.topItem?.title = DI.context.locations.selectedLocation.city
         reloadData()
         super.viewWillAppear(animated)
     }
