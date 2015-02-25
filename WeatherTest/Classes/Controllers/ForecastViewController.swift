@@ -22,18 +22,20 @@ class ForecastViewController: UIViewController, UITableViewDataSource , UITableV
 
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData", name: RELOAD_NOTIFICATION, object: nil)
+        self.navigationController?.topViewController.title = DI.context.locations.selectedLocation.city
         reloadData()
+        super.viewWillAppear(animated)
     }
     
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+        super.viewDidDisappear(animated)
     }
 
     func reloadData() {
         forecastList = DI.context.locations.selectedLocation.weather.forecastList
-        self.navigationController?.navigationBar.topItem?.title = DI.context.locations.selectedLocation.city
         tableView.reloadData()
     }
     
