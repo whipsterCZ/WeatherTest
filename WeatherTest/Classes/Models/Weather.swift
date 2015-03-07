@@ -9,12 +9,13 @@
 import Foundation
 
 let WEATHER_NA = "?"
+let WEATHER_NOT_AVAILABLE = "Not available"
 
 class Weather : NSObject
 {
     
     var latLng: String
-    var type = "Not available"
+    var type = WEATHER_NOT_AVAILABLE
     var tempreatureC = WEATHER_NA
     var tempreatureF = WEATHER_NA
     var iconImageBig = UIImage()
@@ -56,7 +57,7 @@ class Weather : NSObject
         if lastUpdated != nil {
             timeIntervalSinceNow = -lastUpdated!.timeIntervalSinceNow
         }
-        if ( timeIntervalSinceNow >= updateInterval) {
+        if ( timeIntervalSinceNow >= updateInterval || type==WEATHER_NOT_AVAILABLE) {
            DI.context.weatherService.fetchWeather(self)            
         }
     }

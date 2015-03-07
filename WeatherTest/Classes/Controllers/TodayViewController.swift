@@ -46,6 +46,7 @@ class TodayViewController: UIViewController {
     func populate() {
         location = DI.context.locations.selectedLocation
         var weather = location.weather
+        weather.fetchWeather()
         iconImageView.image = weather.iconImageBig
         locationLabel.text = location.getTitle()
         summaryLabel.text = weather.summary()
